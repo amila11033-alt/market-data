@@ -1,0 +1,16 @@
+{
+ "generated_utc": "2026-11-06T22:26:47Z",
+ "last_bar": "2026-11-06",
+ "n_universe": 766,
+ "n_ok": 759,
+ "failed": [
+  "ASK.AX",
+  "IFL.AX",
+  "NSR.AX",
+  "PSTG",
+  "QUB.AX",
+  "VYLR",
+  "XYX.AX"
+ ],
+ "source": "Yahoo Finance via yfinance; Stooq fallback"
+}
