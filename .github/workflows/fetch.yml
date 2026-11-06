@@ -1,0 +1,49 @@
+name: Fetch market data
+
+on:
+  schedule:
+    # After the US close (16:00 ET = 21:00 UTC in winter, 20:00 UTC in summer), Mon–Fri.
+    - cron: "17 21 * * 1-5"
+    # Second attempt in case the first run is delayed or Yahoo throttles it.
+    - cron: "52 21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-market-data
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install --quiet yfinance pandas lxml requests
+
+      - name: Previous universe (fallback if Wikipedia lists fail)
+        run: |
+          git fetch --depth 1 origin data && git show origin/data:universe.json > universe_last.json || echo "no previous data branch"
+
+      - name: Fetch
+        run: python fetch.py
+
+      - name: Publish to the data branch
+        run: |
+          cp tickers.csv out/
+          cd out
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -q -b data
+          git add -A
+          git commit -qm "Market data $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" data
