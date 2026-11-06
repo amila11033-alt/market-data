@@ -142,7 +142,7 @@ def cmd_load(path):
 def cmd_fetch():
     os.makedirs(GHDATA, exist_ok=True)
     for name in ["meta.json", "universe.json", "weekly.json", "daily.json"]:
-        url = DATA_URL + name
+        url = DATA_URL + name + "?t=" + str(int(dt.datetime.utcnow().timestamp()))
         req = urllib.request.Request(url, headers={"User-Agent": "narrative-scanner", "Cache-Control": "no-cache"})
         with urllib.request.urlopen(req, timeout=60) as r:
             data = r.read()

@@ -59,7 +59,11 @@ def index_members():
     except Exception as e:
         log("S&P 500 list failed:", e)
     try:
-        t, c = pick(wiki_tables("https://en.wikipedia.org/wiki/Nasdaq-100"), ["Ticker", "Symbol"], 90, 110)
+        tabs = wiki_tables("https://en.wikipedia.org/wiki/Nasdaq-100")
+        t, c = pick(tabs, ["Ticker", "Symbol"], 90, 130)
+        if t is None:
+            for k, tt in enumerate(tabs):
+                log("  ndx table", k, len(tt), [str(x)[:30] for x in tt.columns][:8])
         n = 0
         for _, r in t.iterrows():
             s = str(r[c]).strip().replace(".", "-")
