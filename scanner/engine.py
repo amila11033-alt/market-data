@@ -142,7 +142,7 @@ def cmd_load(path):
 def cmd_fetch():
     os.makedirs(GHDATA, exist_ok=True)
     for name in ["meta.json", "universe.json", "weekly.json", "daily.json"]:
-        url = DATA_URL + name + "?t=" + str(int(dt.datetime.utcnow().timestamp()))
+        url = DATA_URL + name + "?t=" + str(int(dt.datetime.now(dt.timezone.utc).timestamp()))
         req = urllib.request.Request(url, headers={"User-Agent": "narrative-scanner", "Cache-Control": "no-cache"})
         with urllib.request.urlopen(req, timeout=60) as r:
             data = r.read()
@@ -497,12 +497,14 @@ def cmd_run():
         raise SystemExit("QQQ weekly series missing from GitHub data")
     q = chron(S["QQQ"]); qc = q["c"]
     axjo = chron(S["^AXJO"]) if "^AXJO" in S else None
+    spyw = chron(S["SPY"]) if "SPY" in S else None
     # ---------------- per-stock metrics (every non-benchmark name)
     rows = []
     for sym, info in U.items():
         if info["theme"] == "Benchmark":
             continue
-        bench = axjo if (info["market"] == "ASX" and axjo) else q
+        # theme names vs QQQ (the tech tape); other US index names vs SPY (the broad market); ASX vs ASX 200
+        bench = axjo if (info["market"] == "ASX" and axjo) else (q if info["curated"] or not spyw else spyw)
         m = stock_metrics(sym, S[sym], bench)
         r = {"sym": sym, "name": info["name"], "theme": info["theme"] or info["sector"] or "Other",
              "curated": info["curated"], "market": info["market"], "sector": info["sector"], "index": info["index"]}
