@@ -1,0 +1,6 @@
+scanner/ghdata/
+scanner/out/
+scanner/state.json
+__pycache__/
+out/
+universe_last.json

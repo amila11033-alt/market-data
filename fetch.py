@@ -39,9 +39,11 @@ def wiki_tables(url):
 
 def pick(tables, cols, lo, hi):
     for t in tables:
-        names = [str(c) for c in t.columns]
-        hit = next((c for c in cols if c in names), None)
-        if hit and lo <= len(t) <= hi:
+        if isinstance(t.columns, pd.MultiIndex):
+            t.columns = [" ".join(str(x) for x in c) for c in t.columns]
+        hit = next((c for c in t.columns for want in cols if str(c).split("[")[0].strip() == want), None)
+        hit = hit or next((c for c in t.columns for want in cols if want.lower() in str(c).lower()), None)
+        if hit is not None and lo <= len(t) <= hi:
             return t, hit
     return None, None
 
@@ -198,7 +200,7 @@ def main():
     failed = [s for s in syms if s not in data]
     wk = {s: weekly(df, WEEKS_BENCH if s in bench else WEEKS_STOCK) for s, df in data.items()}
     dy = {s: daily(data[s], DAYS_BENCH) for s in DAILY_SYMS if s in data}
-    last = max((v["d"][0] for v in wk.values()), default=None)
+    last = wk["QQQ"]["d"][0] if "QQQ" in wk else max((v["d"][0] for v in wk.values()), default=None)
     json.dump(wk, open(f"{OUT}/weekly.json", "w"), separators=(",", ":"))
     json.dump(dy, open(f"{OUT}/daily.json", "w"), separators=(",", ":"))
     ulist = [dict(uni[s], has_data=s in data) for s in syms]
