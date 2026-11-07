@@ -15,6 +15,7 @@ Commands
   plan [budget]              extras that need an Alpha Vantage refresh today (default 8)
   ingest <file> <SYM>        parse an Alpha Vantage weekly-adjusted result for an extra ticker
   narr <file>                validate a narratives JSON (list of rows) -> out/narratives.json
+  summ <file>                validate the daily summary JSON (list of rows) -> out/summary.json
 """
 import json, math, os, sys, datetime as dt, re, urllib.request
 
@@ -319,6 +320,8 @@ def stock_metrics(sym, ser, qqq):
     dn = sum(vv[i] for i in range(n - 10, n) if i > 0 and c[i] < c[i - 1] and vv[i])
     m["ud_vol"] = (up / dn) if dn else (3.0 if up else None)
     prior_hi = max(h[-27:-1]) if n > 27 else max(h[:-1])
+    m["ma10w"], m["ma30w"], m["ma40w"] = ma10, ma30, ma40
+    m["hi26"], m["hi52"], m["lo52"] = prior_hi, hi52, lo52
     m["breakout"] = bool(c[-1] >= prior_hi * 0.98)
     m["new_high"] = bool(c[-1] >= hi52 * 0.97)
     if n >= 60:
@@ -651,7 +654,8 @@ def cmd_run():
                     "regime_score": REGIME_SCORE[lab], "dd": rnd(d_, 4)})
     # ---------------- outputs
     num_keys = ["price", "r1w", "r4w", "r13w", "r26w", "r52w", "rs4", "rs13", "rs26", "d10", "d30", "d40",
-                "ma30_slope", "ma40_slope", "off_high", "above_low", "rsi14w", "vol_ratio", "ud_vol", "rs_composite"]
+                "ma30_slope", "ma40_slope", "off_high", "above_low", "rsi14w", "vol_ratio", "ud_vol", "rs_composite",
+                "ma10w", "ma30w", "ma40w", "hi26", "hi52", "lo52"]
     order = {"Early trend": 0, "Emerging": 1, "Established trend": 2, "Basing": 3, "Extended / crowded": 4, "Topping": 5,
              "Neutral": 6, "Breaking down": 7, "Downtrend": 8, "Awaiting data": 9}
     scan = []
@@ -707,6 +711,31 @@ def cmd_run():
     print("\n".join(L))
 
 
+SUMMARY_SECTIONS = ["bottom_line", "conditions", "narratives", "watchlist", "avoid", "actions"]
+
+
+def cmd_summ(path):
+    """Validate the daily summary rows -> out/summary.json"""
+    rows = json.load(open(path))
+    assert isinstance(rows, list) and rows, "summary must be a non-empty list"
+    for i, r in enumerate(rows):
+        for k in ("id", "section", "title", "body"):
+            assert r.get(k), "row %d missing %s" % (i, k)
+        assert r["section"] in SUMMARY_SECTIONS, "row %d: section must be one of %s" % (i, SUMMARY_SECTIONS)
+        for k in ("tickers", "stance", "trigger", "risk", "sources"):
+            r.setdefault(k, "")
+        r.setdefault("rank", i + 1)
+        r.setdefault("updated", today())
+        if isinstance(r["sources"], list):
+            r["sources"] = " ".join(r["sources"])
+    have = {r["section"] for r in rows}
+    for need in ("bottom_line", "conditions", "watchlist", "actions"):
+        assert need in have, "summary needs at least one '%s' row" % need
+    os.makedirs(OUT, exist_ok=True)
+    json.dump(rows, open(os.path.join(OUT, "summary.json"), "w"), separators=(",", ":"))
+    print("summary ok:", len(rows), "rows", sorted(have))
+
+
 def cmd_narr(path):
     rows = json.load(open(path))
     assert isinstance(rows, list) and rows, "narratives must be a non-empty list"
@@ -729,4 +758,5 @@ if __name__ == "__main__":
         print(__doc__); sys.exit(0)
     {"load": lambda: cmd_load(a[1]), "fetch": lambda: cmd_fetch(), "run": lambda: cmd_run(),
      "plan": lambda: cmd_plan(*(a[1:2] or [8])), "ingest": lambda: cmd_ingest(a[1], a[2]),
-     "add": lambda: cmd_add(a[1], a[2], a[3]), "drop": lambda: cmd_drop(a[1]), "narr": lambda: cmd_narr(a[1])}[a[0]]()
+     "add": lambda: cmd_add(a[1], a[2], a[3]), "drop": lambda: cmd_drop(a[1]), "narr": lambda: cmd_narr(a[1]),
+     "summ": lambda: cmd_summ(a[1])}[a[0]]()
