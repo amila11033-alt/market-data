@@ -1,0 +1,123 @@
+symbol,market,theme,name
+NVDA,US,AI accelerators,Nvidia
+AMD,US,AI accelerators,AMD
+AVGO,US,AI accelerators,Broadcom
+MRVL,US,AI accelerators,Marvell
+ARM,US,AI accelerators,Arm Holdings
+QCOM,US,AI accelerators,Qualcomm
+MU,US,Memory & storage,Micron
+WDC,US,Memory & storage,Western Digital
+STX,US,Memory & storage,Seagate
+SNDK,US,Memory & storage,SanDisk
+PSTG,US,Memory & storage,Pure Storage
+NTAP,US,Memory & storage,NetApp
+LRCX,US,Chip equipment,Lam Research
+AMAT,US,Chip equipment,Applied Materials
+KLAC,US,Chip equipment,KLA
+ASML,US,Chip equipment,ASML
+TER,US,Chip equipment,Teradyne
+ONTO,US,Chip equipment,Onto Innovation
+TSM,US,Foundry & analog,TSMC
+INTC,US,Foundry & analog,Intel
+GFS,US,Foundry & analog,GlobalFoundries
+TXN,US,Foundry & analog,Texas Instruments
+ADI,US,Foundry & analog,Analog Devices
+ANET,US,AI networking & optics,Arista
+CIEN,US,AI networking & optics,Ciena
+COHR,US,AI networking & optics,Coherent
+LITE,US,AI networking & optics,Lumentum
+CRDO,US,AI networking & optics,Credo
+ALAB,US,AI networking & optics,Astera Labs
+CSCO,US,AI networking & optics,Cisco
+FN,US,AI networking & optics,Fabrinet
+VRT,US,AI power & cooling,Vertiv
+GEV,US,AI power & cooling,GE Vernova
+CEG,US,AI power & cooling,Constellation
+VST,US,AI power & cooling,Vistra
+ETN,US,AI power & cooling,Eaton
+PWR,US,AI power & cooling,Quanta Services
+TLN,US,AI power & cooling,Talen Energy
+BE,US,AI power & cooling,Bloom Energy
+OKLO,US,Nuclear & uranium,Oklo
+SMR,US,Nuclear & uranium,NuScale
+CCJ,US,Nuclear & uranium,Cameco
+NNE,US,Nuclear & uranium,Nano Nuclear
+LEU,US,Nuclear & uranium,Centrus Energy
+CRWV,US,Neoclouds & servers,CoreWeave
+NBIS,US,Neoclouds & servers,Nebius
+ORCL,US,Neoclouds & servers,Oracle
+DELL,US,Neoclouds & servers,Dell
+SMCI,US,Neoclouds & servers,Super Micro
+HPE,US,Neoclouds & servers,HPE
+IREN,US,Neoclouds & servers,IREN
+PLTR,US,AI software,Palantir
+APP,US,AI software,AppLovin
+SNOW,US,AI software,Snowflake
+DDOG,US,AI software,Datadog
+NOW,US,AI software,ServiceNow
+MDB,US,AI software,MongoDB
+CRM,US,AI software,Salesforce
+CRWD,US,Cybersecurity,CrowdStrike
+ZS,US,Cybersecurity,Zscaler
+NET,US,Cybersecurity,Cloudflare
+PANW,US,Cybersecurity,Palo Alto
+FTNT,US,Cybersecurity,Fortinet
+OKTA,US,Cybersecurity,Okta
+MSFT,US,Hyperscalers & mega-cap,Microsoft
+GOOGL,US,Hyperscalers & mega-cap,Alphabet
+AMZN,US,Hyperscalers & mega-cap,Amazon
+META,US,Hyperscalers & mega-cap,Meta
+AAPL,US,Hyperscalers & mega-cap,Apple
+IONQ,US,Quantum,IonQ
+RGTI,US,Quantum,Rigetti
+QBTS,US,Quantum,D-Wave
+QUBT,US,Quantum,Quantum Computing Inc
+RKLB,US,Space & defence tech,Rocket Lab
+ASTS,US,Space & defence tech,AST SpaceMobile
+PL,US,Space & defence tech,Planet Labs
+LUNR,US,Space & defence tech,Intuitive Machines
+AVAV,US,Space & defence tech,AeroVironment
+KTOS,US,Space & defence tech,Kratos
+COIN,US,Crypto & fintech,Coinbase
+HOOD,US,Crypto & fintech,Robinhood
+MSTR,US,Crypto & fintech,Strategy
+SOFI,US,Crypto & fintech,SoFi
+AFRM,US,Crypto & fintech,Affirm
+XYZ,US,Crypto & fintech,Block
+TSLA,US,Robotics & autonomy,Tesla
+SYM,US,Robotics & autonomy,Symbotic
+ISRG,US,Robotics & autonomy,Intuitive Surgical
+NFLX,US,Consumer internet,Netflix
+SHOP,US,Consumer internet,Shopify
+MELI,US,Consumer internet,MercadoLibre
+SPOT,US,Consumer internet,Spotify
+RBLX,US,Consumer internet,Roblox
+DASH,US,Consumer internet,DoorDash
+UBER,US,Consumer internet,Uber
+LLY,US,GLP-1 & biotech,Eli Lilly
+NVO,US,GLP-1 & biotech,Novo Nordisk
+VKTX,US,GLP-1 & biotech,Viking Therapeutics
+WTC.AX,ASX,ASX software & platforms,WiseTech
+XRO.AX,ASX,ASX software & platforms,Xero
+TNE.AX,ASX,ASX software & platforms,TechnologyOne
+PME.AX,ASX,ASX software & platforms,Pro Medicus
+REA.AX,ASX,ASX software & platforms,REA Group
+CAR.AX,ASX,ASX software & platforms,CAR Group
+CPU.AX,ASX,ASX software & platforms,Computershare
+NXT.AX,ASX,ASX AI infrastructure,NextDC
+GMG.AX,ASX,ASX AI infrastructure,Goodman Group
+MP1.AX,ASX,ASX AI infrastructure,Megaport
+DDR.AX,ASX,ASX AI infrastructure,Dicker Data
+WBT.AX,ASX,ASX AI infrastructure,Weebit Nano
+QQQ,US,Benchmark,Nasdaq-100 ETF
+SPY,US,Benchmark,S&P 500 ETF
+SMH,US,Benchmark,Semiconductor ETF
+RSP,US,Benchmark,S&P 500 equal weight ETF
+IWM,US,Benchmark,Russell 2000 ETF
+HYG,US,Benchmark,High-yield bond ETF
+IEF,US,Benchmark,7-10y Treasury ETF
+^NDX,US,Benchmark,Nasdaq-100
+^GSPC,US,Benchmark,S&P 500
+^VIX,US,Benchmark,VIX
+^TNX,US,Benchmark,US 10-year yield
+^AXJO,ASX,Benchmark,S&P/ASX 200
